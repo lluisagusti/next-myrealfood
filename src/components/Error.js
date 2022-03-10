@@ -1,7 +1,7 @@
 import { Button, Grid } from "semantic-ui-react";
 import { useRouter } from "next/router";
 
-export default function ProductNotFound() {
+export default function Error() {
   // hooks
   const router = useRouter();
 
@@ -20,7 +20,7 @@ export default function ProductNotFound() {
     >
       <Grid.Row>
         <Grid.Column textAlign="center">
-          <h2>Product Not Found</h2>
+          <h2>Error</h2>
           <img src="red-pepper.png" alt="myrealfood-logo"></img>
           <div>
             <Button color="teal" onClick={() => router.push("/")}>
