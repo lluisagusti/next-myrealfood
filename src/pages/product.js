@@ -1,31 +1,25 @@
-import ProductNotFound from "../components/ProductNotFound";
+// import ProductNotFound from "../components/ProductNotFound";
+// import Error from "../components/Error";
+import Loading from "../components/Loading";
+import { apiUrl } from "../constants/constants";
 
-export default function Product({ result }) {
+export default function Product({ product }) {
+  product && console.log("product @ Product --> ", product);
 
-    result && console.log('result @ Home --> ', result)
-   return (
-     <div>
-       <h1>Product Data</h1>
-       <h2>Based on query</h2>
-       <ProductNotFound />
-     </div>
-   );
- }
- 
- export async function getServerSideProps({ query }) {
-   console.log('GETTING SERVER SIDE PROPS !!!!');
- 
-   // const res = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barCode}`)
-   const res = await fetch(`https://world.openfoodfacts.org/api/v2/product/04963406`);
-   const data = await res.json();
-   // console.log('data @ getServerSideProps --> ' , data);
- 
-   return {
-     props: {
-       result: data
-     }
-   }
- }
- 
+  return (
+    <div>
+      <h1>Product Data</h1>
+      <h2>Based on query</h2>
+    </div>
+  );
+}
 
- // status: 1 -------------> product_verbose: "product found"
+export async function getServerSideProps({req, res}) {
+
+  const response = await fetch(
+    `${apiUrl}/product/${req.cookies.barcode}`
+  );
+  const data = await response.json();
+
+  return { props: { product: data || {} } };
+}
