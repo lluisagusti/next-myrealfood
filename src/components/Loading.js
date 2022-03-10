@@ -1,5 +1,4 @@
-import { Grid } from "semantic-ui-react";
-import Spinner from "./Spinner";
+import { Grid, Loader, } from "semantic-ui-react";
 
 export default function Loading() {
   return (
@@ -12,7 +11,7 @@ export default function Loading() {
       <Grid.Row>
         <Grid.Column textAlign="center">
           <img src="red-pepper.png" alt="myrealfood-logo" />
-          <Spinner />
+          <Loader active inline='centered' />
         </Grid.Column>
       </Grid.Row>
     </Grid>

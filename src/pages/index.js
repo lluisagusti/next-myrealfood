@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Button, Form, Grid } from "semantic-ui-react";
+import { Button, Form, Grid, Input, Dropdown } from "semantic-ui-react";
 import { useRouter } from "next/router";
 import cookie from 'js-cookie';
+import { useEffect } from "react";
+import HistoryModal from "../components/HistoryModal";
+// import Loading from "../components/Loading";
 
 export default function Home() {
 
@@ -10,6 +13,11 @@ export default function Home() {
 
   // state
   const [search, setSearch] = useState("");
+  const [searchHistory, setSearchHistory] = useState([]);
+
+  useEffect(() => {
+    setSearchHistory(JSON.parse(localStorage.getItem('searchHistory')) || []);
+  }, [])
 
   // handles webcom library
   const handleWebcam = () => {
@@ -18,24 +26,18 @@ export default function Home() {
 
   // handles search
   const handleSearch = () => {
-    // adds search to cookie
+    // adds search using js-cookie
     cookie.set('barcode', search)
 
-    // add search to search history
-  //   let historyObj = { city: [] };
+    // manage search history using localStorage
+    const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    if (search.toString() !== history[history.length - 1]) {
+      localStorage.setItem('searchHistory', JSON.stringify([...history, search]));
+      setSearchHistory([...history, search])
+    } else {
+      setSearchHistory([search])
+    }
 
-  //   function onLoad() {
-  //     if(localStorage.getItem('history')) {
-  //       historyObj = JSON.parse(localStorage.getItem('history'));
-  //     }
-  //   }
-    
-  //   function addHistory(dataToSave) {
-  //     historyObj.city.push(dataToSave);
-  //     localStorage.setItem('history',JSON.stringify(historyObj));
-  //   }lStorage.setItem("searchHistory",historyTmp);
-  //  }
-    
     // push to path
     router.push("/product");
   };
@@ -51,10 +53,17 @@ export default function Home() {
         <Grid.Column textAlign="center">
           <Form>
             <h2>MyRealFood</h2>
-            <Form.Input placeholder="Buscar" onChange={(event) => setSearch(event.target.value)} />
-            <Button color="teal" onClick={handleSearch}>Buscar</Button>
+            <Form.Input
+              placeholder="Buscar"
+              onChange={(event) => setSearch(event.target.value)}
+            />
+            <Button color="teal" onClick={handleSearch}>
+              Buscar
+            </Button>
             <Button onClick={handleWebcam}>Webcam</Button>
+            <HistoryModal />
           </Form>
+          {/* <Loading /> */}
         </Grid.Column>
       </Grid.Row>
     </Grid>
