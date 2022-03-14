@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { scannerConfig } from "../constants/constants";
 import Quagga from "quagga";
 
-const Scanner = ({ onDetected }) => {
+export default function Scanner({ onDetected }) {
 
   useEffect(() => {
     Quagga.init(scannerConfig, (err) => {
@@ -29,5 +29,3 @@ const Scanner = ({ onDetected }) => {
     <div id="interactive" className="viewport" />
   );
 };
-
-export default Scanner;

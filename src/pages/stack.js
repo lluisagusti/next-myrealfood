@@ -6,7 +6,7 @@ export default function Stack() {
     <Grid
       centered
       verticalAlign="middle"
-      columns="1"
+      columns="2"
       style={{ height: "20vh", padding: "5em" }}
     >
       {stack.map((item, index) => {
