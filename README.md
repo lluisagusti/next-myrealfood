@@ -2,7 +2,9 @@
 
 ## next-myrealfood
 
-First, run the development server:
+Branch: 'myrealfood-cookies'
+
+Run the development server:
 
 ```bash
 yarn dev
