@@ -2,8 +2,6 @@
 
 ## next-myrealfood
 
-Branch: 'myrealfood-cookies'
-
 Run the development server:
 
 ```bash
