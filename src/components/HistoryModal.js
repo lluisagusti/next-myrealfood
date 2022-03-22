@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { Button, Header, Image, Modal, List, Card, Grid } from "semantic-ui-react";
+import { Button, Modal, Card, Grid } from "semantic-ui-react";
 
 export default function HistoryModal() {
   // state
   const [open, setOpen] = useState(false);
-  const [searchHistory, setSearchHistory] = useState(
-    JSON.parse(localStorage.getItem("searchHistory")) || []
-  );
+  const [searchHistory, setSearchHistory] = useState([]);
+
+  useEffect(() => {
+    setSearchHistory(JSON.parse(localStorage.getItem("searchHistory")));
+  }, []);
 
   return (
     <Modal
@@ -22,11 +24,9 @@ export default function HistoryModal() {
             <Grid.Row>
               {searchHistory &&
                 searchHistory.map((item, index) => {
-                  //   return <List.Item key={index}>{item}</List.Item>;
                   return (
-                    <Grid.Column>
-                      {" "}
-                      <Card key={index} href="#" header={item} />
+                    <Grid.Column key={index}>
+                      <Card href="#" header={item} />
                     </Grid.Column>
                   );
                 })}
@@ -38,13 +38,6 @@ export default function HistoryModal() {
         <Button color="teal" onClick={() => setOpen(false)}>
           Cerrar
         </Button>
-        {/* <Button
-          content="Yep, that's me"
-          labelPosition="right"
-          icon="checkmark"
-          onClick={() => setOpen(false)}
-          positive
-        /> */}
       </Modal.Actions>
     </Modal>
   );
